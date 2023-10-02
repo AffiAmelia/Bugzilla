@@ -1,0 +1,34 @@
+<div class="row card-styling">
+<% @bugs.each do |bug| %>
+  	<div class="col-md-4">
+  	  <div class="card">
+            <h3 class="card-header bg-info text-white"><%= bug.title %></h3>
+            <% if bug.screenshot.attached? %>
+              <%= image_tag bug.screenshot, class: 'card-img-top', style: 'height: 200px'%>
+            <% end %>
+
+            <p class="card-body text-justify">Description: <%= bug.description %></p>
+            <p class="card-body text-justify">Category: <%= bug.category %></p>
+            <p class="card-body text-justify">Deadline: <%= bug.deadline %></p>
+            <div class='card-text'>
+              <%= form_with model: bug, method: :patch, local: :true do |f| %>
+                <div class="field form-group ">
+                  <%= f.label :status %><br />
+                  <%= f.select :status, bug.possible_upcoming_statuses, class: 'form-control selectpicker' %>
+                </div>
+
+                <% if policy(bug).edit_status? %>
+                  <%= f.submit "Save Changes" , class: 'btn card-buttons'%>
+                <% end %>
+              <%end%>
+            </div>
+
+            <% if policy(current_user).edit_bug_button? %>
+              <%= link_to 'Edit Bug', edit_bug_path(bug), class: 'btn card-buttons' %>
+              <%= link_to 'Delete Bug', bug_path(bug), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn card-buttons' %>
+            <% end %>
+
+        </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,21 @@
+<%= render 'shared/navbar'%>
+<h1 class='page-heading'>Projects</h1>
+
+<div class="row card-styling">
+  <% @records.each do |p| %>
+  	<div class="col-md-4">
+  	  <div class="card">
+        <h3 class="card-header bg-info text-white"><%= p.title %></h3>
+        <p class="card-body text-justify"><%= p.description %></p>
+        <p class="card-body"><i>-Created by <%= User.find(p.creator_id).name%> </i></p>
+        <div class='card-text'>
+          <%= link_to 'Show', p, class: 'btn card-buttons'  %>
+          <% if policy(current_user).create_project_button? %>
+            <%= link_to 'Edit', edit_project_path(p) , class: 'btn card-buttons btn-img'%>
+            <%= link_to 'Delete', project_path(p), method: :delete, data: { confirm: "Are you sure?" },class: 'btn card-buttons'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

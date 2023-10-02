@@ -1,0 +1,32 @@
+<nav class="navbar sticky-top navbar-expand-lg  navbar-dark justify-content-between">
+  <a class="navbar-brand"> Bugzilla</a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ms-auto">
+
+      <li class="nav-item" >
+      <% if policy(current_user).create_project_button? %>
+        <%= link_to "Create", new_project_path %>
+      <% end %>
+      </li>
+
+      <% if policy(current_user).add_bug_button? %>
+        <li class="nav-item">
+          <%= link_to 'Add Bug', new_bug_path(current_user) %>
+        </li>
+      <% end %>
+
+      <li class="nav-item">
+        <%= link_to "Projects", projects_path(current_user) %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to "Profile", edit_user_registration_path(current_user) %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to 'Logout' , destroy_user_session_path, method: :delete %>
+      </li>
+    </ul>
+  </div>
+</nav>

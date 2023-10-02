@@ -1,0 +1,43 @@
+<%= render 'shared/navbar'%>
+<div class='container'>
+  <h2 class= 'page-heading2'>Create Bug</h2>
+  <div class='col-md-4 project'>
+
+    <%= form_with model: @record, validate: true, local: true do |f| %>
+
+      <div class='field form-group'>
+        <%= f.label :title , class: 'form-label' %><br />
+        <%= f.text_field :title , class: 'form-control' , required: true %>
+      </div>
+
+      <div class='field form-group'>
+        <%= f.label :description , class: 'form-label' %><br />
+        <%= f.text_area :description , class: 'form-control' %>
+      </div>
+
+      <div class='field form-group'>
+        <%= f.label :category %><br />
+        <%= f.select :category, Bug::CATEGORY_MAP, class: 'form-control selectpicker' %>
+      </div>
+
+      <div class='field form-group'>
+        <strong>Assign Project to Bug</strong><br />
+        <%= f.collection_select :project_id, @projects, :id, :title, {},{ class: 'form-control selectpicker'} %>
+      </div>
+
+      <div class='field form-group'>
+        <%= f.label :deadline , class: 'form-label' %><br />
+        <%= f.datetime_select :deadline , ampm: true , class: 'form-control' %>
+      </div>
+
+      <div class='field form-group'>
+        <%= f.label :screenshot , class: 'form-label' %><br />
+        <%= f.file_field :screenshot , class: 'form-control', direct_upload: true, accept: ".png,.gif" %>
+      </div>
+      <p>
+        <%= f.submit "Create" , class: 'btn update-btn' %>
+      </p>
+    <% end %>
+  </div>
+</div>
+

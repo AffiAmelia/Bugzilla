@@ -1,0 +1,45 @@
+<%= render 'shared/navbar'%>
+<h1 class='page-heading'><%= @record.title %></h1>
+<div class="row">
+  <div class='col-md-4 project'>
+  <p class= "description">
+    <i>
+    <%= @record.description %>
+    </i>
+  </p>
+  <p class="caption">
+    <strong>Assignee's</strong>
+  </p>
+  <table class="table center">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @project_users.each do |assigned| %>
+        <tr>
+          <td> <%= assigned.first %> </td>
+          <td> <%= assigned[1] %> </td>
+          <td> <%= assigned[2] %> </td>
+          <td> <%= assigned.last %> </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+
+  <% if policy(current_user).create_project_button? %>
+    <%= link_to 'Edit', edit_project_path(@record), class: 'btn update-btn' %>
+    <%= link_to 'Delete', project_path(@record), method: :delete, data: { confirm: "Are you sure?" },class: 'btn delete-buttons'%>
+  <% end %>
+  <h1 class='bugs-heading'>Bugs</h1>
+  </div>
+</div>
+
+<%= render 'bugs'%>
+
+
+
